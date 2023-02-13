@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { firebaseAuth } from "../utils/firebase-config";
+
 import styled from "styled-components";
 import BackgroundImage from "../components/BackgroundImage";
 import Header from "../components/Header";
 
-const signup = () => {
+const Signup = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSignIn = async () => {
+    try {
+      const { email, password } = formValues;
+      await createUserWithEmailAndPassword(firebaseAuth, email, password);
+      console.log("done");
+    } catch (error) {
+      console.log(error);
+      alert(` ${error} 💥`);
+    }
+  };
+
   return (
-    <Container>
+    <Container showPassword={showPassword}>
       <BackgroundImage />
       <div className="content">
         <Header login />
@@ -18,14 +38,40 @@ const signup = () => {
             </h6>
           </div>
           <div className="form">
-            <input type="email" placeholder="Email address" name="email" />
+            <input
+              type="email"
+              placeholder="Email address"
+              name="email"
+              value={formValues.email}
+              onChange={(e) =>
+                setFormValues({
+                  ...formValues,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
 
-            <input type="password" placeholder="Password" name="password" />
+            {showPassword && (
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={formValues.password}
+                onChange={(e) =>
+                  setFormValues({
+                    ...formValues,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
+            )}
 
-            <button> Get started</button>
+            {!showPassword && (
+              <button onClick={() => setShowPassword(true)}>Get Started</button>
+            )}
           </div>
 
-          <button>Log In</button>
+          {showPassword && <button onClick={handleSignIn}>Sign up</button>}
         </div>
       </div>
     </Container>
@@ -92,4 +138,4 @@ const Container = styled.div`
   }
 `;
 
-export default signup;
+export default Signup;
