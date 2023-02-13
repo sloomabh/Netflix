@@ -8,9 +8,9 @@ const signup = () => {
     <Container>
       <BackgroundImage />
       <div className="content">
-        <Header />
+        <Header login />
         <div className="body flex column a-center j-center">
-          <div className="text flex coloumn">
+          <div className="text flex column">
             <h1>Unlimited movies, TV shows and more.</h1>
             <h4>Watch anywhere. Cancel anytime.</h4>
             <h6>
