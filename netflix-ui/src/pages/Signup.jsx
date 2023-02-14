@@ -25,12 +25,8 @@ const Signup = () => {
     e.preventDefault();
     try {
       const { email, password } = formValues;
-      const res = await createUserWithEmailAndPassword(
-        firebaseAuth,
-        email,
-        password
-      );
-      console.log(res);
+      await createUserWithEmailAndPassword(firebaseAuth, email, password);
+      //  console.log(res);
     } catch (error) {
       console.log(error);
       alert(` ${error} 💥`);
