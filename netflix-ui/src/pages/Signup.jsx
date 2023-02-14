@@ -21,11 +21,16 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSignIn = async () => {
+  const handleSignIn = async (e) => {
+    e.preventDefault();
     try {
       const { email, password } = formValues;
-      await createUserWithEmailAndPassword(firebaseAuth, email, password);
-      console.log("done");
+      const res = await createUserWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+      );
+      console.log(res);
     } catch (error) {
       console.log(error);
       alert(` ${error} 💥`);
