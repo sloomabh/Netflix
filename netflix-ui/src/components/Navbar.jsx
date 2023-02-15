@@ -1,20 +1,28 @@
 import { signOut } from "firebase/auth";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { firebaseAuth } from "../utils/firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
 import { FaPowerOff, FaSearch } from "react-icons/fa";
 
 const Navbar = ({ isScrolled }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [inputHover, setInputHover] = useState(false);
+  const navigate = useNavigate();
   const links = [
     { name: "Home", link: "/" },
     { name: "TV Shows", link: "/tv" },
     { name: "Movies", link: "/movies" },
     { name: "My List", link: "/mylist" },
   ];
+
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (!currentUser) navigate("/login");
+  });
+
   return (
     <Container>
       <nav className={`${isScrolled ? "scrolled" : ""} flex`}>
@@ -55,7 +63,12 @@ const Navbar = ({ isScrolled }) => {
               }}
             />
           </div>
-          <button onClick={() => signOut(firebaseAuth)}>
+          <button
+            onClick={() => {
+              signOut(firebaseAuth);
+              alert("you are signed Out");
+            }}
+          >
             <FaPowerOff />
           </button>
         </div>
@@ -108,7 +121,7 @@ const Container = styled.div`
         }
         svg {
           color: #f34242;
-          font-size: 1.2rem;
+          font-size: 1.5rem;
         }
       }
       .search {
