@@ -85,7 +85,7 @@ const Signup = () => {
             )}
           </div>
 
-          {showPassword && <button onClick={handleSignIn}>Sign up</button>}
+          {showPassword && <button onClick={handleSignIn}>Sign In</button>}
           {error && <p>Error: {error}</p>}
         </div>
       </div>
