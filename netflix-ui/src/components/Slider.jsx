@@ -6,10 +6,12 @@ const Slider = ({ movies }) => {
   const getMoviesFromRange = (from, to) => {
     return movies.slice(from, to);
   };
+  console.log(movies);
   return (
     <Container>
       <CardSlider data={getMoviesFromRange(0, 10)} title="Trending Now" />
       <CardSlider data={getMoviesFromRange(10, 20)} title="New Releases" />
+
       <CardSlider
         data={getMoviesFromRange(20, 30)}
         title="Blockbuster Movies"

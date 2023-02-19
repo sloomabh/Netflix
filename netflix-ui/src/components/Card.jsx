@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { removeMovieFromLiked } from "../store";
 import video from "../assets/video.mp4";
 
-const Card = ({ movieData, isLiked = false }) => {
+export default React.memo(function Card({ movieData, isLiked = false }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isHovered, setIsHovered] = useState(false);
@@ -88,7 +88,7 @@ const Card = ({ movieData, isLiked = false }) => {
       )}
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   max-width: 230px;
@@ -166,4 +166,4 @@ const Container = styled.div`
     }
   }
 `;
-export default Card;
+//export default Card;
