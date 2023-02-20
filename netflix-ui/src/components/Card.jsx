@@ -19,6 +19,25 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const [email, setEmail] = useState(undefined);
   //console.log(movieData);
+
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (currentUser) {
+      setEmail(currentUser.email);
+    } else navigate("/login");
+  });
+
+  const addToList = async () => {
+    try {
+      await axios.post("http://localhost:5000/api/user/add", {
+        email,
+        data: movieData,
+      });
+      alert("your movie is added to your favorit list");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container
       onMouseEnter={() => setIsHovered(true)}
@@ -67,9 +86,7 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
                     }*/
                   />
                 ) : (
-                  <AiOutlinePlus
-                    title="Add to my list" /*onClick={addToList} */
-                  />
+                  <AiOutlinePlus title="Add to my list" onClick={addToList} />
                 )}
               </div>
               <div className="info">
